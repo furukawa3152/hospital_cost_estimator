@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>入院費概算シミュレーター</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>入院費概算シミュレーター</h1>
+      <p>Googleスプレッドシートを毎回読み込んで、条件に応じた概算を表示します。</p>
+      <div class="top-actions">
+        <button id="restartBtn" type="button" class="btn secondary">はじめから</button>
+      </div>
+    </header>
+
+    <section id="status" class="status loading">データを読み込んでいます...</section>
+
+    <section id="wizard" class="card hidden">
+      <div class="progress">
+        <span id="progressText">1 / 1</span>
+      </div>
+      <h2 id="questionTitle">条件を選択してください</h2>
+      <p id="questionHelp" class="help"></p>
+      <div id="options" class="options"></div>
+
+      <div class="actions">
+        <button id="backBtn" type="button" class="btn secondary">戻る</button>
+        <button id="nextBtn" type="button" class="btn" disabled>次へ</button>
+      </div>
+    </section>
+
+    <section id="result" class="card hidden">
+      <h2>概算結果</h2>
+      <div class="result-grid">
+        <div>
+          <p class="label">月額上限</p>
+          <p id="monthlyCap" class="value">-</p>
+        </div>
+        <div>
+          <p class="label">食事代</p>
+          <p id="mealCost" class="value">-</p>
+        </div>
+        <div>
+          <p class="label">概算合計</p>
+          <p id="totalCost" class="value total">-</p>
+        </div>
+      </div>
+      <p id="remarkText" class="note"></p>
+
+      <div class="summary">
+        <h3>選択条件</h3>
+        <ul id="summaryList"></ul>
+      </div>
+
+      <p id="resultNote" class="note"></p>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
