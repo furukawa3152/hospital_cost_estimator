@@ -11,8 +11,6 @@ const progressTextEl = document.getElementById("progressText");
 const questionTitleEl = document.getElementById("questionTitle");
 const questionHelpEl = document.getElementById("questionHelp");
 const optionsEl = document.getElementById("options");
-const backBtn = document.getElementById("backBtn");
-const nextBtn = document.getElementById("nextBtn");
 const restartBtn = document.getElementById("restartBtn");
 
 const monthlyCapEl = document.getElementById("monthlyCap");
@@ -191,7 +189,23 @@ function goToNextOrResult() {
 }
 
 function renderCurrentStep() {
-  const activeRows = getFilteredRowsByAnswers(answers);
+  const step = steps[currentStep];
+
+  // 現在のステップより後ろの回答は一旦無視して、候補行を絞り込み直す
+  const currentKey = step?.key;
+  const currentPos = CONDITION_KEYS.findIndex((key) => key === currentKey);
+  const baseAnswers = {};
+
+  if (currentPos >= 0) {
+    for (let i = 0; i <= currentPos; i += 1) {
+      const key = CONDITION_KEYS[i];
+      if (answers[key]) {
+        baseAnswers[key] = answers[key];
+      }
+    }
+  }
+
+  const activeRows = getFilteredRowsByAnswers(baseAnswers);
   if (!activeRows.length) {
     setStatus("一致する条件が見つかりませんでした。はじめから選び直してください。", "error");
     statusEl.classList.remove("hidden");
@@ -200,16 +214,10 @@ function renderCurrentStep() {
     return;
   }
 
-  if (isCompleted()) {
-    renderResult(activeRows);
-    return;
-  }
-
   resultEl.classList.add("hidden");
   wizardEl.classList.remove("hidden");
   statusEl.classList.add("hidden");
 
-  const step = steps[currentStep];
   const options = getOptionsForColumn(step.key, activeRows);
   const selected = answers[step.key] || "";
 
@@ -235,15 +243,6 @@ function renderCurrentStep() {
     });
     optionsEl.appendChild(btn);
   });
-
-  backBtn.disabled = currentStep === 0;
-  nextBtn.disabled = !answers[step.key];
-  nextBtn.textContent = currentStep === steps.length - 1 ? "結果を見る" : "次へ";
-}
-
-function isCompleted() {
-  if (!steps.length) return false;
-  return steps.every((step) => Boolean(answers[step.key]));
 }
 
 function toJPY(value) {
@@ -270,25 +269,12 @@ function renderResult(matchedRows) {
   if (matchedRows.length > 1) {
     resultNoteEl.textContent = `一致データが${matchedRows.length}件あります。先頭データを表示しています。`;
   } else {
-    resultNoteEl.textContent = "シート上の一致データを表示しています。";
+    resultNoteEl.textContent = "上記金額はあくまで概算です。詳細な料金は、病態、手術内容等によって変動します。";
   }
 
   wizardEl.classList.add("hidden");
   resultEl.classList.remove("hidden");
 }
-
-backBtn.addEventListener("click", () => {
-  if (currentStep > 0) {
-    currentStep -= 1;
-    renderCurrentStep();
-  }
-});
-
-nextBtn.addEventListener("click", () => {
-  if (!steps.length) return;
-  if (!answers[steps[currentStep]?.key]) return;
-  goToNextOrResult();
-});
 
 restartBtn.addEventListener("click", () => {
   answers = {};

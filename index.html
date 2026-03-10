@@ -10,7 +10,7 @@
   <main class="container">
     <header class="header">
       <h1>入院費概算シミュレーター</h1>
-      <p>Googleスプレッドシートを毎回読み込んで、条件に応じた概算を表示します。</p>
+      <p>選択した条件に応じた入院費の概算金額を表示します。</p>
       <div class="top-actions">
         <button id="restartBtn" type="button" class="btn secondary">はじめから</button>
       </div>
@@ -26,10 +26,6 @@
       <p id="questionHelp" class="help"></p>
       <div id="options" class="options"></div>
 
-      <div class="actions">
-        <button id="backBtn" type="button" class="btn secondary">戻る</button>
-        <button id="nextBtn" type="button" class="btn" disabled>次へ</button>
-      </div>
     </section>
 
     <section id="result" class="card hidden">
