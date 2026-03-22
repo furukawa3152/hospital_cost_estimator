@@ -7,7 +7,6 @@ const CONDITION_KEYS = ["a1", "a2", "a3", "a4", "a5", "a6", "a7"];
 const statusEl = document.getElementById("status");
 const wizardEl = document.getElementById("wizard");
 const resultEl = document.getElementById("result");
-const progressTextEl = document.getElementById("progressText");
 const questionTitleEl = document.getElementById("questionTitle");
 const questionHelpEl = document.getElementById("questionHelp");
 const optionsEl = document.getElementById("options");
@@ -221,7 +220,6 @@ function renderCurrentStep() {
   const options = getOptionsForColumn(step.key, activeRows);
   const selected = answers[step.key] || "";
 
-  progressTextEl.textContent = `${currentStep + 1} / ${steps.length}`;
   questionTitleEl.textContent = step.label;
   questionHelpEl.textContent = "";
   optionsEl.innerHTML = "";

@@ -9,19 +9,21 @@
 <body>
   <main class="container">
     <header class="header">
-      <h1>入院費概算シミュレーター</h1>
-      <p>選択した条件に応じた入院費の概算金額を表示します。</p>
-      <div class="top-actions">
-        <button id="restartBtn" type="button" class="btn secondary">はじめから</button>
+      <div class="header-inner">
+        <div class="header-copy">
+          <p class="institution-name">医療法人ひらまつ病院</p>
+          <h1>入院費概算シミュレーター</h1>
+          <p>選択した条件に応じた入院費の概算金額を表示します。</p>
+        </div>
+        <div class="top-actions">
+          <button id="restartBtn" type="button" class="btn secondary">はじめから</button>
+        </div>
       </div>
     </header>
 
     <section id="status" class="status loading">データを読み込んでいます...</section>
 
     <section id="wizard" class="card hidden">
-      <div class="progress">
-        <span id="progressText">1 / 1</span>
-      </div>
       <h2 id="questionTitle">条件を選択してください</h2>
       <p id="questionHelp" class="help"></p>
       <div id="options" class="options"></div>
@@ -30,9 +32,12 @@
 
     <section id="result" class="card hidden">
       <h2>概算結果</h2>
+      <p class="result-lead">
+        医療費の自己負担額は月ごとに計算されるため、月をまたいで入院や治療が続く場合は、その分だけ自己負担額が増える可能性があります。
+      </p>
       <div class="result-grid">
         <div>
-          <p class="label">月額上限</p>
+          <p class="label">医療費分支払額</p>
           <p id="monthlyCap" class="value">-</p>
         </div>
         <div>
@@ -44,7 +49,7 @@
           <p id="totalCost" class="value total">-</p>
         </div>
       </div>
-      <p id="remarkText" class="note"></p>
+      <p id="remarkText" class="note remark-prominent"></p>
 
       <div class="summary">
         <h3>選択条件</h3>
